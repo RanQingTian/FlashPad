@@ -21,8 +21,12 @@ public class RecordPanel extends JPanel {
         recordPanel = crtRecordPanel();
 
         gbc = crtGBC(0, 0, 1);
+//        gbc.insets = new Insets(0, 0, 0, 0);
         this.add(recordChooser, gbc);
-        gbc = crtGBC(0, 1, 1);
+//        gbc.insets = new Insets(100, 0, 0, 0);
+        gbc.gridy++;
+        gbc.gridheight=5;
+        gbc.weighty=1;
         this.add(recordPanel, gbc);
         System.out.println(recordChooser.getPreferredSize());
     }
@@ -55,7 +59,6 @@ public class RecordPanel extends JPanel {
     }
 
     private JPanel crtRecordPanel() {
-        GridLayout recordLayout = new GridLayout(0, 1);
         JPanel rdPanel = new JPanel(new GridBagLayout());
         rdPanel.setBorder(new TitledBorder("Hello Border"));
         GridBagConstraints gbc;
@@ -63,8 +66,11 @@ public class RecordPanel extends JPanel {
         JComponent recordLabel = crtRecordLabel();
         JComponent recordContent = crtRecordContent();
         gbc = crtGBC(0, 0, 1);
+//        gbc.insets = new Insets(50, 50, 50, 50);
         rdPanel.add(recordLabel, gbc);
         gbc = crtGBC(0, 1, 10);
+        gbc.weighty=1;
+//        gbc.insets = new Insets(700, 0, 0, 0);
         rdPanel.add(recordContent, gbc);
 
 
@@ -86,7 +92,6 @@ public class RecordPanel extends JPanel {
     private JComponent crtRecordLabel() {
         JPanel labelPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
 
-
         labelPanel.add(new Label("first"));
         labelPanel.add(new Label("second"));
         labelPanel.add(new Label("third"));
@@ -97,7 +102,7 @@ public class RecordPanel extends JPanel {
         JPanel contentPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
         contentPanel.setBorder(border);
 
-        JTextArea rdContentArea = new JTextArea();
+        JTextArea rdContentArea = new JTextArea(50,50);
         JScrollPane rdContentPane = new JScrollPane(rdContentArea);
         rdContentPane.setBorder(border);
         contentPanel.add(rdContentPane);
@@ -108,12 +113,8 @@ public class RecordPanel extends JPanel {
 
     private GridBagConstraints crtGBC(int x, int y, int height) {
         GridBagConstraints gbc = new GridBagConstraints();
-        gbc.fill = GridBagConstraints.HORIZONTAL;
-        if (height > 0) {
-//            gbc.weighty = 0.5;
-        } else {
-            gbc.weightx = 0;
-        }
+        gbc.fill = GridBagConstraints.BOTH;
+
         gbc.weightx = 1;
         gbc.gridx = x;
         gbc.gridy = y;
