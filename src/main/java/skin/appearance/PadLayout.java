@@ -12,18 +12,17 @@ import java.awt.*;
 public class PadLayout extends JFrame {
     private CardLayout cardLayout = new CardLayout(20, 10);
     private JPanel cardPanel = new JPanel(cardLayout);
-    private JComboBox jCombo;
 
     public PadLayout() {
 
         //record manager box
-        JComponent rdMngBox = CatalogueLayout.newInstance();
+        JComponent rdMngPanel = CatalogueLayout.newInstance();
 
         //record box
-        JComponent rdPanel = RecordPanel.newRecordView();
+        JTabbedPane rdPanel = RecordPanel.newRecordView();
 
         JSplitPane jSplitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
-        jSplitPane.add(rdMngBox);
+        jSplitPane.add(rdMngPanel);
         jSplitPane.add(rdPanel);
 
         this.add(jSplitPane);
@@ -32,6 +31,8 @@ public class PadLayout extends JFrame {
         this.setPreferredSize(new Dimension(1000, 1000));
         this.pack();
         this.setVisible(true);
+//        System.out.println(rdPanel.getTabComponentAt(0).getName());
+
     }
 
     public static void main(String[] args) {

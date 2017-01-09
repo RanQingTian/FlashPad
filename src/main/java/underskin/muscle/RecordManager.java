@@ -8,7 +8,6 @@ import underskin.skeleton.RecordManagerOpt;
  * Created by Eligi.Ran on 2017/1/5.
  */
 public class RecordManager implements RecordManagerOpt {
-    @Override
     public String createBelonging(String name) {
         if(!StringUtil.emptyCheck(name)){
             return null;
@@ -18,7 +17,6 @@ public class RecordManager implements RecordManagerOpt {
         return name;
     }
 
-    @Override
     public String deleteBelonging(String name) {
         if(!StringUtil.emptyCheck(name)){
             return null;
