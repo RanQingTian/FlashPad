@@ -1,5 +1,7 @@
 package skin.part;
 
+import underskin.blood.RecordContainer;
+
 import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.event.ChangeEvent;
@@ -12,10 +14,6 @@ import java.awt.event.MouseEvent;
  * Created by Eligi.Ran on 2017/1/5.
  */
 public class RecordPanel extends JTabbedPane implements ChangeListener {
-    //record box
-    private JPanel recordChooser;
-    private JPanel recordPanel;
-    private Border border = BorderFactory.createLineBorder(Color.BLACK);
 
     private RecordPanel() {
         String title1 = "first";
@@ -40,6 +38,11 @@ public class RecordPanel extends JTabbedPane implements ChangeListener {
                 }
             }
         });
+
+    }
+
+    public void addTab(RecordContainer recordContainer){
+        this.addTab(recordContainer.getTitle(),crtRecordPanel());
 
     }
 
@@ -75,7 +78,6 @@ public class RecordPanel extends JTabbedPane implements ChangeListener {
         gbc.ipadx = 50;
         gbc.insets = new Insets(20, 0, 0, 0);
         rdPanel.add(recordContent, gbc);
-
 
         return rdPanel;
     }

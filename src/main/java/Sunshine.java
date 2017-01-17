@@ -1,6 +1,3 @@
-import skin.appearance.PadLayout;
-import skin.part.PadApplet;
-
 import javax.swing.*;
 
 /**
@@ -9,8 +6,5 @@ import javax.swing.*;
 public class Sunshine extends JApplet {
 
     public Sunshine(){
-        JApplet jApplet = new PadApplet();
-        jApplet.init();
-        jApplet.start();
     }
 }

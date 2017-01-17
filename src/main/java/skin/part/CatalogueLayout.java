@@ -13,18 +13,10 @@ public class CatalogueLayout extends JPanel {
 
     private CatalogueLayout() {
         GridLayout gridLayout = new GridLayout(1,1);
-        BoxLayout boxLayout = new BoxLayout(this,BoxLayout.Y_AXIS);
         this.setLayout(gridLayout);
-        GridBagConstraints gbc = new GridBagConstraints();
-        gbc.fill = GridBagConstraints.HORIZONTAL;
-        gbc.weightx = 1;
-        gbc.gridwidth=1;
-        gbc.gridheight = 1;
-        gbc.gridx = 0;
-        gbc.anchor = GridBagConstraints.NORTH;
 
         //create the root node
-        DefaultMutableTreeNode root = new DefaultMutableTreeNode("Deafult");
+        DefaultMutableTreeNode root = new DefaultMutableTreeNode("Root1");
         //create the child nodes
         DefaultMutableTreeNode vegetableNode = new DefaultMutableTreeNode("Vegetables");
         DefaultMutableTreeNode fruitNode = new DefaultMutableTreeNode("Fruits");
@@ -33,7 +25,7 @@ public class CatalogueLayout extends JPanel {
         root.add(fruitNode);
 
         //create the root node
-        DefaultMutableTreeNode root2 = new DefaultMutableTreeNode("Root");
+        DefaultMutableTreeNode root2 = new DefaultMutableTreeNode("Root2");
         //create the child nodes
         DefaultMutableTreeNode vegetableNode2 = new DefaultMutableTreeNode("Vegetables");
         DefaultMutableTreeNode fruitNode2 = new DefaultMutableTreeNode("Fruits");
