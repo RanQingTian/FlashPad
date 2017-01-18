@@ -2,16 +2,18 @@ package skin.part;
 
 import javax.swing.*;
 import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.TreePath;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 /**
  * Created by Eligi.Ran on 2017/1/6.
  */
-public class CatalogueLayout extends JPanel {
+public class CataloguePanel extends JPanel {
 
 
-
-    private CatalogueLayout() {
+    private CataloguePanel() {
         GridLayout gridLayout = new GridLayout(1,1);
         this.setLayout(gridLayout);
 
@@ -19,6 +21,7 @@ public class CatalogueLayout extends JPanel {
         DefaultMutableTreeNode root = new DefaultMutableTreeNode("Root1");
         //create the child nodes
         DefaultMutableTreeNode vegetableNode = new DefaultMutableTreeNode("Vegetables");
+
         DefaultMutableTreeNode fruitNode = new DefaultMutableTreeNode("Fruits");
         //add the child nodes to the root node
         root.add(vegetableNode);
@@ -36,17 +39,30 @@ public class CatalogueLayout extends JPanel {
         DefaultMutableTreeNode rootNode = new DefaultMutableTreeNode("Deafult");
         rootNode.add(root);
         rootNode.add(root2);
-        JTree mngTree = new JTree(rootNode);
+        final JTree mngTree = new JTree(rootNode);
         mngTree.setAutoscrolls(true);
         mngTree.setRootVisible(false);
         mngTree.setPreferredSize(new Dimension(150,200));
+        mngTree.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent me) {
+                TreePath tp = mngTree.getPathForLocation(me.getX(), me.getY());
+                switch (me.getClickCount()) {
+                    case 2:
+                        if (tp != null) {
+
+                        }
+                        break;
+                }
+            }
+        });
         this.add(mngTree);
 
 
     }
 
-    public static JComponent newInstance() {
-        return new CatalogueLayout();
+    public static JPanel newInstance() {
+        return new CataloguePanel();
     }
 
 }

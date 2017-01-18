@@ -1,6 +1,6 @@
 package skin.appearance;
 
-import skin.part.CatalogueLayout;
+import skin.part.CataloguePanel;
 import skin.part.RecordPanel;
 
 import javax.swing.*;
@@ -10,13 +10,11 @@ import java.awt.*;
  * Created by Eligi.Ran on 2017/1/5.
  */
 public class PadLayout extends JFrame {
-    private CardLayout cardLayout = new CardLayout(20, 10);
-    private JPanel cardPanel = new JPanel(cardLayout);
 
     public PadLayout() {
 
         //record manager box
-        JComponent rdMngPanel = CatalogueLayout.newInstance();
+        JComponent rdMngPanel = CataloguePanel.newInstance();
 
         //record box
         JTabbedPane rdPanel = RecordPanel.newRecordView();
