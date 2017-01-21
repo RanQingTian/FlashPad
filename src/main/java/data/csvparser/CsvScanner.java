@@ -84,7 +84,7 @@ public class CsvScanner {
         List<List<String>> result = new ArrayList<List<String>>();
         FileInputStream inputStream = null;
         Scanner sc = null;
-        String path = "d:/5000X5000.csv";
+        String path = "d:/testData/1000X1000.csv";
         File file = new File(path);
         try {
             inputStream = new FileInputStream(file);

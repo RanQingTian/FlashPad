@@ -15,7 +15,7 @@ public class DBTest {
     public static void main(String[] args) throws Exception {
         Connection conn = null;
         String sql = null;
-        final String initSql = "INSERT INTO data2 (value,fieldName,rowIndex,fileName) VALUES ";
+        final String initSql = "INSERT INTO data3 (value,fieldName,rowIndex,fieldIndex) VALUES ";
         String url = "jdbc:mysql://localhost:3306/testdb?"
                 + "user=root&password=db123456&useUnicode=true&characterEncoding=UTF8";
 
@@ -42,6 +42,15 @@ public class DBTest {
             long startTime = new java.util.Date().getTime();
             int commit = 0;
             List<String> fieldName = data.get(0);
+            int fieldSize = fieldName.size();
+            StringBuilder strb= new StringBuilder("insert into filed_name (id,fieldName,fileName) ");
+
+            for(int field=0;field<fieldSize;i++){
+
+                ps = conn.prepareStatement(strb.toString()+field);
+                ps.addBatch();
+                ps.executeBatch();
+            }
             data.remove(fieldName);
             int length = data.size();
             for (int row = 0; row < length; row++) {
@@ -49,7 +58,7 @@ public class DBTest {
                 List<String> list = data.get(0);
                 int colSize = list.size();
                 for (int column = 0; column < colSize; column++) {
-                    stringBuilder.append("('" + list.get(column) + "','" + fieldName.get(column) + "','" + row + "','" + "test.csv" + "'),");
+                    stringBuilder.append("('" + list.get(column) + "','" + fieldName.get(column) + "','" + row + "','" + column + "'),");
                     k++;
                     if (k % size == 0) {
                         sql = new String(stringBuilder.substring(0, stringBuilder.length() - 1) + ";");
@@ -80,6 +89,7 @@ public class DBTest {
             ps.addBatch();
             ps.executeBatch();
             conn.commit();
+            System.out.println("final insert done:" + (new java.util.Date().getTime() - startTime) / (1000));
 
         } catch (SQLException e) {
             System.out.println("MySQL操作错误");
