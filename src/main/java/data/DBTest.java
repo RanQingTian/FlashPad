@@ -12,6 +12,7 @@ import java.util.List;
  * Created by Eligi.Ran on 2017/1/20.
  */
 public class DBTest {
+
     public static void main(String[] args) throws Exception {
         Connection conn = null;
         String sql = null;
@@ -30,7 +31,7 @@ public class DBTest {
             conn.setAutoCommit(false);
 
 
-            int size = 20000;
+            int size = 8;
 
             StringBuilder stringBuilder = new StringBuilder(initSql);
             PreparedStatement ps = null;
@@ -38,58 +39,82 @@ public class DBTest {
             List<List<String>> data = CsvScanner.getTestData();
             System.out.println("load end");
 
-            int i = 0, k = 0, commitSize = 10;
+            int i = 0, k = 0, commitSize = 5;
             long startTime = new java.util.Date().getTime();
             int commit = 0;
+            System.out.println("Record filed Name");
             List<String> fieldName = data.get(0);
             int fieldSize = fieldName.size();
-            StringBuilder strb= new StringBuilder("insert into filed_name (id,fieldName,fileName) ");
+            StringBuilder strb = new StringBuilder("insert into field_name (id,fieldName,fileName) values ");
+            final String builder = new String("('id','fieldName','fileName'),");
+            StringBuilder temp = null;
+            int idIndexBegin = builder.indexOf("'id'"), idIndexEnd = idIndexBegin + 4,
+                    fieldNameIndexBegin = 0, fieldNameIndexEnd = 0, fileIndexBegin = 0, fileIndexEnd = 0;
+            int firstPart = fieldSize - 1;
+            int fieldCommit = 0;
+            for (int field = 0; field < firstPart; field++) {
+                temp = new StringBuilder(builder);
+                temp.replace(idIndexBegin, idIndexEnd, "" + field);
+                fieldNameIndexBegin = temp.indexOf("'fieldName'");
+                fieldNameIndexEnd = fieldNameIndexBegin + 11;
+                temp.replace(fieldNameIndexBegin, fieldNameIndexEnd, "'" + fieldName.get(field) + "'");
+                fileIndexBegin = temp.indexOf("'fileName'");
+                fileIndexEnd = fileIndexBegin + 10;
+                temp.replace(fileIndexBegin, fileIndexEnd, "'" + "csvName" + "'");
+                strb.append(temp);
+                fieldCommit++;
 
-            for(int field=0;field<fieldSize;i++){
-
-                ps = conn.prepareStatement(strb.toString()+field);
-                ps.addBatch();
-                ps.executeBatch();
             }
-            data.remove(fieldName);
+            strb.replace(strb.length() - 1, strb.length(), ";");
+            ps = conn.prepareStatement(strb.toString());
+            ps.addBatch();
+            ps.executeBatch();
+            conn.commit();
+            ps.close();
+            ps = null;
+
+            System.out.println("Record field Name finished : " + (new java.util.Date().getTime() - startTime) / (1000));
             int length = data.size();
+
             for (int row = 0; row < length; row++) {
                 System.out.println("Row" + (++i) + ":" + (new java.util.Date().getTime() - startTime) / (1000));
                 List<String> list = data.get(0);
                 int colSize = list.size();
-                for (int column = 0; column < colSize; column++) {
-                    stringBuilder.append("('" + list.get(column) + "','" + fieldName.get(column) + "','" + row + "','" + column + "'),");
-                    k++;
-                    if (k % size == 0) {
-                        sql = new String(stringBuilder.substring(0, stringBuilder.length() - 1) + ";");
-                        stringBuilder = null;
-                        ps = conn.prepareStatement(sql);
-                        ps.addBatch();
-                        ps.executeBatch();
-                        sql = null;
-                        commit++;
-                        stringBuilder = new StringBuilder(initSql);
-                        k = 0;
-                        if (commit % commitSize == 0) {
-                            commit = 0;
-                            System.out.println(row + "  insert start:" + (new java.util.Date().getTime() - startTime) / (1000));
-                            conn.commit();
-                            System.out.println("insert done:" + (new java.util.Date().getTime() - startTime) / (1000));
-                        }
-                        ps.close();
-                        ps = null;
+                int column = 0;
+                for (String str : list) {
+                    stringBuilder.append("('" + str + "','" + fieldName.get(column) + "','" + row + "','" + column + "'),");
+                    column++;
+                }
+                if ((row + 1) % size == 0) {
+                    sql = stringBuilder.replace(stringBuilder.length() - 1, stringBuilder.length(), "").toString();
+                    stringBuilder = null;
+                    ps = conn.prepareStatement(sql);
+                    ps.addBatch();
+                    ps.executeBatch();
+                    sql = null;
+                    commit++;
+                    stringBuilder = new StringBuilder(initSql);
+                    k = 0;
+                    if (commit % commitSize == 0) {
+                        commit = 0;
+                        System.out.println(row + "  insert start:" + (new java.util.Date().getTime() - startTime) / (1000));
+                        conn.commit();
+                        System.out.println("insert done:" + (new java.util.Date().getTime() - startTime) / (1000));
                     }
-
+                    ps.close();
+                    ps = null;
                 }
                 list = null;
                 data.remove(0);
             }
-            sql = new String(stringBuilder.substring(0, stringBuilder.length() - 1) + ";");
-            ps = conn.prepareStatement(sql);
-            ps.addBatch();
-            ps.executeBatch();
-            conn.commit();
-            System.out.println("final insert done:" + (new java.util.Date().getTime() - startTime) / (1000));
+            if (commit > 0) {
+                sql = new String(stringBuilder.substring(0, stringBuilder.length() - 1) + ";");
+                ps = conn.prepareStatement(sql);
+                ps.addBatch();
+                ps.executeBatch();
+                conn.commit();
+                System.out.println("final insert done:" + (new java.util.Date().getTime() - startTime) / (1000));
+            }
 
         } catch (SQLException e) {
             System.out.println("MySQL操作错误");
