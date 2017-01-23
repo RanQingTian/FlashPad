@@ -10,14 +10,15 @@ import java.awt.*;
  * Created by Eligi.Ran on 2017/1/5.
  */
 public class PadLayout extends JFrame {
-
+    private static JComponent rdMngPanel;
+    private static JTabbedPane rdPanel;
     public PadLayout() {
 
         //record manager box
-        JComponent rdMngPanel = CataloguePanel.newInstance();
+        rdMngPanel = CataloguePanel.newInstance();
 
         //record box
-        JTabbedPane rdPanel = RecordPanel.newRecordView();
+        rdPanel = RecordPanel.newRecordView();
 
         JSplitPane jSplitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
         jSplitPane.add(rdMngPanel);
@@ -33,8 +34,17 @@ public class PadLayout extends JFrame {
 
     }
 
+    public static JComponent getRdMngPanel() {
+        return rdMngPanel;
+    }
+
+    public static JTabbedPane getRdPanel() {
+        return rdPanel;
+    }
+
     public static void main(String[] args) {
         JFrame jFrame = new PadLayout();
     }
+
 
 }

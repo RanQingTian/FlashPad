@@ -1,5 +1,7 @@
 package skin.part;
 
+import skin.appearance.PadLayout;
+
 import javax.swing.*;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreePath;
@@ -46,12 +48,11 @@ public class CataloguePanel extends JPanel {
         mngTree.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent me) {
-                TreePath tp = mngTree.getPathForLocation(me.getX(), me.getY());
+                DefaultMutableTreeNode clickedNode = (DefaultMutableTreeNode) mngTree.getLastSelectedPathComponent();
                 switch (me.getClickCount()) {
                     case 2:
-                        if (tp != null) {
-
-                        }
+                        JTabbedPane rdPanel = PadLayout.getRdPanel();
+                        
                         break;
                 }
             }
