@@ -20,7 +20,7 @@ public class MysqlConnector {
         // 执行数据库操作之前要在数据库管理系统上创建一个数据库，名字自己定，
         // 下面语句之前就要先创建javademo数据库
         String url = "jdbc:mysql://localhost:3306/testdb?"
-                + "user=root&password=db123456&useUnicode=true&characterEncoding=UTF8";
+                + "user=root&password=123456&useUnicode=true&characterEncoding=UTF8";
 
         try {
             // 之所以要使用下面这条语句，是因为要使用MySQL的驱动，所以我们要把它驱动起来，
@@ -44,8 +44,12 @@ public class MysqlConnector {
             PreparedStatement ps = null;
             conn.setAutoCommit(false);
 //                Statement stmt = conn.createStatement();
+            long startTime = new java.util.Date().getTime();
+            System.out.println("Before reading data:" + startTime / 1000);
+            List<List<String>> data = CsvScanner.getTestData();
+            System.out.println("Finished reading data:" + (new java.util.Date().getTime() - startTime) / 1000);
             sql = "INSERT INTO data2 (value) VALUES ";
-            int size = 100000, commitSize = 5;
+            int size = data.get(0).size(), commitSize = 500000;
             for (int i = 0; i < size; i++) {
                 sql += "(?),";
             }
@@ -53,10 +57,6 @@ public class MysqlConnector {
             ps = conn.prepareStatement(sql);
 
             int i = 0;
-            long startTime = new java.util.Date().getTime();
-            System.out.println("Before reading data:" + startTime / 1000);
-            List<List<String>> data = CsvScanner.getTestData();
-            System.out.println("Finished reading data:" + (new java.util.Date().getTime() - startTime) / 1000);
 
             int k = 0;
             int length = data.size();
@@ -70,22 +70,22 @@ public class MysqlConnector {
                         ps.addBatch();
                         ps.executeBatch();
                         commit++;
-                        if (commit % commitSize == 0) {
+                        System.out.println("Row" + i+" committed");
+                        if ((commit*size) >= commitSize ) {
                             commit = 0;
                             System.out.println("insert start:" + (new java.util.Date().getTime() - startTime) / (1000));
                             conn.commit();
                             System.out.println("insert done:" + (new java.util.Date().getTime() - startTime) / (1000));
                         }
                         k = 0;
-                        ps.clearParameters();
+//                        ps.clearParameters();
                     }
 
                 }
                 data.remove(0);
             }
 //            try {
-            ps.addBatch();
-            ps.executeBatch();
+
             conn.commit();
 //            }catch (BatchUpdateException e){
 //

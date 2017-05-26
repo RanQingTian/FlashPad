@@ -21,8 +21,6 @@ public class CsvScanner {
         Scanner sc = null;
         String path = "d:/5000X5000.csv";
 
-        StringBuilder sb = new StringBuilder();
-        NumberFormat format = NumberFormat.getInstance();
         File file = new File(path);
 
         try {
@@ -34,12 +32,6 @@ public class CsvScanner {
             while (sc.hasNextLine()) {
                 crunchifyLine = sc.nextLine();
                 crunchifyCSVtoArrayList(crunchifyLine);
-                // System.out.println(line);
-//                long maxMemory = runtime.maxMemory();
-//                long allocatedMemory = runtime.totalMemory();
-//                long freeMemory = runtime.freeMemory();
-//                long used = (allocatedMemory - freeMemory) / (1024*1024);
-//                maxUsed = maxUsed >= used ? maxUsed : used;
             }
             System.out.println("max used:" + maxUsed + "\t" + crunchifyLine);
 
