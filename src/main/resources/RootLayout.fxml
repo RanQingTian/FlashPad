@@ -24,4 +24,8 @@
     </Menu>
   </menus>
 </MenuBar>
-</top></BorderPane>
+</top>
+  <center>
+    <fx:include source="PersonOverview.fxml" fx:id="overView" />
+  </center>
+</BorderPane>
