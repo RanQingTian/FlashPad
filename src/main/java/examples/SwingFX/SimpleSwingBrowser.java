@@ -1,4 +1,4 @@
-package examples;
+package examples.SwingFX;
 
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
@@ -189,7 +189,7 @@ public class SimpleSwingBrowser extends JFrame {
             public void run() {
                 SimpleSwingBrowser browser = new SimpleSwingBrowser();
                 browser.setVisible(true);
-                browser.loadURL("http://oracle.com");
+                browser.loadURL("baidu.com");
             }
         });
     }
