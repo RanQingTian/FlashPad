@@ -4,6 +4,7 @@
 
 package examples.combobox;
 
+
 import com.jgoodies.forms.layout.CellConstraints;
 import com.jgoodies.forms.layout.FormLayout;
 

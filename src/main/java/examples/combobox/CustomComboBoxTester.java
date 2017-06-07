@@ -1,5 +1,7 @@
 package examples.combobox;
 
+import examples.deleteComboBox.TemplateComboBox;
+
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
@@ -30,6 +32,7 @@ public class CustomComboBoxTester extends JFrame {
         });
         add(customCombobox);
         add(button);
+        add(new TemplateComboBox());
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(400, 100);

@@ -44,7 +44,7 @@ public class TemplateComboBoxRenderer extends JPanel implements ListCellRenderer
         btnEdit = new JButton(new ImageIcon(getClass().getResource("/images/icon_list_more.png")));
         add(labelItem, cc.xy(1,1));
         add(btnEdit, cc.xy(2,1));
-        add(btnDelete, cc.xy(4,1));add(btnDelete, cc.xy(8,1));
+        add(btnDelete, cc.xy(4,1));
 
         return this;
     }
