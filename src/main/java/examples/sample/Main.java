@@ -26,6 +26,8 @@ public class Main extends Application {
         Parent root = FXMLLoader.load(ResourceUtils.getURL("classpath:RootLayout.fxml"));
 //        Parent root = FXMLLoader.load(ResourceUtils.getURL("classpath:PersonOverview.fxml"));
 //        Parent root = FXMLLoader.load(ResourceUtils.getURL("classpath:UI.fxml"));
+        String s = new String("123");
+        s.intern();
         primaryStage.setTitle("Hello World");
         Scene scene = new Scene(root, 300, 275);
 //        Scene scene = new Scene(new Browser(),750,500);

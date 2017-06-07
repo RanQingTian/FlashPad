@@ -13,7 +13,7 @@ import java.util.concurrent.locks.ReentrantLock;
 /**
  * JtextPane use html type
  */
-public class Test2 {
+public class ConcurrentThread {
     public boolean turn = true;
 
     public static void show(int i, String... words) {
@@ -27,11 +27,11 @@ public class Test2 {
     public static void main(String[] args) {
         LinkedList<Integer> test = new LinkedList<>();
         test.add(0);
-        Test2 mytest = new Test2();
+        ConcurrentThread mytest = new ConcurrentThread();
         ReentrantLock lock = new ReentrantLock();
         Condition a = lock.newCondition();
         Condition b = lock.newCondition();
-
+        long start = new Date().getTime();
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -65,14 +65,14 @@ public class Test2 {
                     try {
                         lock.lock();
                         Thread.sleep(1000);
-                        System.out.println("a work done");
+                        System.out.println((new Date().getTime() - start) + " a work done");
                         b.signal();
                         a.await();
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     } finally {
                         lock.unlock();
-                        System.out.println("a thread unlocked");
+                        System.out.println((new Date().getTime() - start) + " a thread unlocked");
                     }
                 }
             }
@@ -85,19 +85,18 @@ public class Test2 {
                     try {
                         lock.lock();
                         Thread.sleep(1000);
-                        System.out.println("b work done");
+                        System.out.println((new Date().getTime() - start) + " b work done");
                         a.signal();
                         b.await();
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     } finally {
                         lock.unlock();
-                        System.out.println("b thread unlocked");
+                        System.out.println((new Date().getTime() - start) + " b thread unlocked");
                     }
                 }
             }
         }).start();
-        Date start = new Date();
 
         Date end = new Date();
 
