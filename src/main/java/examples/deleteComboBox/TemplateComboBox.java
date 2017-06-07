@@ -19,10 +19,16 @@ public class TemplateComboBox extends JPanel {
         txtEditField.setEditable(false);
         btnDropDown = new JButton("D");
         pmuDropDown = new JPopupMenu();
+        pmuDropDown.setPreferredSize(new Dimension(100,200));
+        JMenuItem item = new JMenuItem();
+        item.setLayout(new FormLayout("left:40px:grow,fill:20px,fill:20px","fill:22px"));
+        item.add(new JLabel("real"),cc.xy(1,1));
+        item.add(new JButton("1"),cc.xy(2,1));
+        item.add(new JButton("2"),cc.xy(3,1));
         pmuDropDown.add(new JMenu("A1"));
-        pmuDropDown.add(new JMenu("A2"));
-        pmuDropDown.add(new JMenu("A3"));
         pmuDropDown.add(new JMenu("B2"));
+        pmuDropDown.add(item);
+
 
         loadListener();
         this.add(txtEditField,cc.xy(1,1));
