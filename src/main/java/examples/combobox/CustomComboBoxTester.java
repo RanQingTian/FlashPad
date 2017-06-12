@@ -1,5 +1,7 @@
 package examples.combobox;
 
+import com.jgoodies.forms.layout.CellConstraints;
+import com.jgoodies.forms.layout.FormLayout;
 import examples.deleteComboBox.TemplateComboBox;
 
 import java.awt.Dimension;
@@ -32,7 +34,7 @@ public class CustomComboBoxTester extends JFrame {
         });
         add(customCombobox);
         add(button);
-        add(new TemplateComboBox());
+        add(new TemplateComboBox(),1);
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(400, 100);
@@ -46,5 +48,6 @@ public class CustomComboBoxTester extends JFrame {
             }
         });
     }
+
 
 }

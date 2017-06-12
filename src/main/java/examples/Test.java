@@ -1,5 +1,9 @@
 package examples;
 
+import com.jgoodies.forms.layout.CellConstraints;
+import com.jgoodies.forms.layout.FormLayout;
+
+import javax.swing.*;
 import java.util.*;
 
 /**
@@ -27,29 +31,29 @@ public class Test {
     }
 
     public static void main(String[] args) {
-        int length = 100000;
-        List<Integer> integers = new ArrayList<>(length);
-        List<Integer> integers2 = new ArrayList<>(length);
-        Date start1 = new Date();
-        integers.forEach(ele -> ele = new Double(Math.random()*length).intValue());
-        Date start2 = new Date();
-        System.out.println("for(:) is " + (start2.getTime() - start1.getTime()));
-        for (int i = 0; i<length; i++) {
-            integers2.add( new Double(Math.random()*length).intValue());
-        }
-        Date start3 = new Date();
-        System.out.println("for( ; ;) is " + (start3.getTime() - start2.getTime()));
-        Collections.sort(integers);
-        Date start4 = new Date();
-        System.out.println("sort is " + (start4.getTime() - start3.getTime()));
-        integers2.parallelStream().sorted();
-        Date start5 = new Date();
-        System.out.println("parallelSort is " + (start5.getTime() - start4.getTime()));
+        JDialog dialog = new JDialog();
+        DefaultListModel model = new DefaultListModel();
+        JList<String> list = new JList<>(model);
+        JScrollPane scrollPane = new JScrollPane(list);
+        dialog.add(scrollPane);
 
-        Date end = new Date();
-//        System.out.println((end.getTime() - start.getTime()));
-
+        model.addElement(createSpcItemPanel("1333"));
+        model.addElement(createSpcItemPanel("asfd"));
+        model.addElement(createSpcItemPanel("sdfsdf"));
+        dialog.setVisible(true);
 
     }
 
+    public static JPanel createSpcItemPanel(String name) {
+        CellConstraints cc = new CellConstraints();
+        JPanel panel = new JPanel(new FormLayout("fill:10px,fill:20px,fill:10px,left:pref:grow", "fill:22px"));
+        JRadioButton radioButton = new JRadioButton();
+        radioButton.setName(name);
+        JLabel label = new JLabel(name);
+
+        panel.add(radioButton, cc.xy(2,1));
+        panel.add(label, cc.xy(4,1));
+
+        return panel;
+    }
 }
